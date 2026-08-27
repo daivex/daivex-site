@@ -1,6 +1,334 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
+<head>
 <meta charset="utf-8">
-<title>Daivex</title>
-<h1>Daivex</h1>
-<p>Разбираю процессы и собираю под них автоматизацию.</p>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daivex — практическое применение ИИ в бизнес-процессах</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Golos+Text:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root[data-theme="light"]{
+  --bg:#FAF9F5; --card:#FFFFFF; --ink:#14120F; --soft:#6B655C; --line:#E9E4DA;
+  --pill:#14120F; --pill-ink:#FAF9F5; --ghost:#DAD3C7; --dim:#B6AFA4;
+  --g1:rgba(23,162,162,.15); --g2:rgba(118,104,214,.13); --g3:rgba(226,168,104,.15);
+  --w1:rgba(23,162,162,.13); --w2:rgba(118,104,214,.12); --w3:rgba(226,168,104,.15);
+  --ph:linear-gradient(135deg,#EFE8DC,#E4DACA); --brown:#8A6E4B; --brown-bg:rgba(138,110,75,.14);
+  --shadow:rgba(50,40,25,.09);
+}
+:root[data-theme="dark"]{
+  --bg:#131110; --card:#1B1917; --ink:#F2EFE9; --soft:#948E85; --line:#2A2724;
+  --pill:#F2EFE9; --pill-ink:#131110; --ghost:#39352F; --dim:#5E574F;
+  --g1:rgba(23,162,162,.20); --g2:rgba(118,104,214,.18); --g3:rgba(226,168,104,.15);
+  --w1:rgba(23,162,162,.18); --w2:rgba(118,104,214,.17); --w3:rgba(226,168,104,.18);
+  --ph:linear-gradient(135deg,#232019,#2C2823); --brown:#C6A276; --brown-bg:rgba(198,162,118,.16);
+  --shadow:rgba(0,0,0,.45);
+}
+:root{
+  --ui:"Onest",system-ui,sans-serif; --text:"Golos Text",system-ui,sans-serif;
+  --acc:#17A2A2; --wrap:1300px; --r:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--text);font-size:17px;line-height:1.62}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 34px}
+.stamp{position:fixed;bottom:12px;right:12px;z-index:99;background:var(--pill);color:var(--pill-ink);
+  font-family:var(--ui);font-size:12px;padding:6px 12px;border-radius:999px;opacity:.7}
+
+/* шапка */
+.head{position:sticky;top:0;z-index:30;background:var(--bg);border-bottom:1px solid var(--line)}
+.head .wrap{display:flex;align-items:center;gap:28px;padding-top:16px;padding-bottom:16px}
+.brand{font-family:var(--ui);font-weight:700;font-size:19px;letter-spacing:-.03em;text-decoration:none}
+.menu{display:flex;gap:22px;flex-wrap:wrap}
+.menu a{font-family:var(--ui);font-weight:500;font-size:15px;color:var(--soft);text-decoration:none;white-space:nowrap}
+.menu a:hover{color:var(--ink)}
+.right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.theme{width:38px;height:38px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--soft);cursor:pointer;display:grid;place-items:center}
+.theme:hover{color:var(--ink);border-color:var(--soft)}
+.cta{font-family:var(--ui);font-weight:600;font-size:14.5px;text-decoration:none;background:var(--pill);color:var(--pill-ink);padding:12px 22px;border-radius:999px;white-space:nowrap}
+.cta:hover{opacity:.87}
+
+/* герой */
+.hero{position:relative;padding:72px 0 0}
+.glow{position:absolute;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0}
+.glow.a{width:600px;height:440px;background:var(--g1);top:-140px;right:-60px}
+.glow.b{width:500px;height:380px;background:var(--g2);top:40px;right:280px}
+.glow.c{width:420px;height:320px;background:var(--g3);top:220px;right:40px}
+.hero>h1,.hero>p{position:relative;z-index:1}
+h1{font-family:var(--ui);font-weight:600;letter-spacing:-.042em;line-height:1.05;
+  font-size:clamp(2.1rem,5.2vw,4.85rem);margin:0 0 26px;max-width:20ch}
+.hero .lede{color:var(--soft);max-width:62ch;font-size:1.06rem;margin:0}
+
+/* общие секции */
+.sec{padding:64px 0 0}
+.eyebrow{font-family:var(--ui);font-weight:500;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);margin:0 0 20px}
+h2{font-family:var(--ui);font-weight:600;letter-spacing:-.042em;line-height:1.07;font-size:clamp(1.75rem,3.3vw,3.1rem);margin:0 0 20px;max-width:20ch}
+.intro{color:var(--soft);max-width:62ch;margin:0 0 40px;font-size:1.03rem}
+.bar{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;margin-bottom:14px}
+.bar h2{margin:0;font-size:clamp(1.5rem,2.4vw,2.15rem)}
+.all{margin-left:auto;font-family:var(--ui);font-weight:600;font-size:15px;text-decoration:none;color:var(--soft);white-space:nowrap}
+.all:hover{color:var(--ink)}
+.said{color:var(--soft);max-width:62ch;margin:0 0 26px;font-size:15.5px}
+
+/* навигация: четыре входа */
+.gates{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.gate{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:30px 32px 26px;text-decoration:none;transition:transform .2s,box-shadow .2s,border-color .2s}
+.gate:hover{transform:translateY(-4px);border-color:var(--ghost);box-shadow:0 18px 44px var(--shadow)}
+.gate .wash{position:absolute;top:-80px;right:-80px;width:240px;height:200px;border-radius:50%;filter:blur(52px)}
+.g1 .wash{background:var(--w1)}.g2 .wash{background:var(--w2)}.g3 .wash{background:var(--w3)}.g4 .wash{background:var(--w1)}
+.gate>*{position:relative;z-index:1}
+.gate h3{font-family:var(--ui);font-weight:600;font-size:1.34rem;letter-spacing:-.03em;margin:0 0 12px}
+.gate p{color:var(--soft);font-size:15.5px;line-height:1.55;margin:0 0 22px}
+.gate .go{font-family:var(--ui);font-weight:600;font-size:15px;color:var(--acc)}
+
+/* темы со счётчиками */
+.topics{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.topic{display:flex;align-items:flex-start;gap:20px;background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:20px 22px;text-decoration:none;transition:border-color .18s,transform .18s}
+.topic:hover{border-color:var(--acc);transform:translateX(3px)}
+.topic .tx{flex:1}
+.topic b{display:block;font-family:var(--ui);font-weight:600;font-size:1.06rem;letter-spacing:-.022em;margin-bottom:5px}
+.topic span{display:block;color:var(--soft);font-size:14.5px;line-height:1.45}
+.topic .n{font-family:var(--ui);font-weight:600;font-size:1.06rem;color:var(--dim);min-width:2ch;text-align:right}
+.topic:hover .n{color:var(--acc)}
+
+/* ленты карточек */
+.feed{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+  text-decoration:none;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s,border-color .2s}
+.item:hover{transform:translateY(-4px);border-color:var(--ghost);box-shadow:0 18px 40px var(--shadow)}
+.item .ph{height:132px;background:var(--ph);border-bottom:1px solid var(--line)}
+.item .body{padding:22px 24px 24px;display:flex;flex-direction:column;flex:1}
+.item h3{font-family:var(--ui);font-weight:600;font-size:1.1rem;line-height:1.28;letter-spacing:-.026em;margin:0 0 10px}
+.item p{color:var(--soft);font-size:14.8px;line-height:1.5;margin:0 0 20px}
+.tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto}
+.tag{font-family:var(--ui);font-weight:500;font-size:12.5px;color:var(--soft);border:1px solid var(--line);border-radius:999px;padding:4px 11px}
+
+/* кейсы */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.chip{font-family:var(--ui);font-weight:500;font-size:14.5px;padding:9px 17px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--soft);cursor:pointer;transition:.16s}
+.chip:hover{border-color:var(--soft);color:var(--ink)}
+.chip.on{background:var(--pill);border-color:var(--pill);color:var(--pill-ink)}
+.case-row{display:grid;grid-template-columns:1.9fr .8fr .85fr .85fr auto;gap:22px;align-items:center;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px 24px;margin-bottom:10px;
+  text-decoration:none;transition:transform .18s,box-shadow .18s,border-color .18s}
+.case-row:hover{border-color:var(--ghost);transform:translateY(-2px);box-shadow:0 12px 28px var(--shadow)}
+.badge{display:inline-block;font-family:var(--ui);font-weight:600;font-size:11.5px;padding:3px 10px;border-radius:999px;margin-bottom:8px}
+.badge.own{background:var(--brown-bg);color:var(--brown)}
+.badge.mkt{background:var(--brown-bg);color:var(--brown)}
+.case-row .name{font-family:var(--ui);font-weight:600;font-size:1.12rem;letter-spacing:-.024em;line-height:1.24;display:block}
+.case-row .who{color:var(--soft);font-size:15.5px}
+.case-row .was{font-family:var(--ui);font-weight:600;color:var(--soft);font-size:15.5px}
+.case-row .now{font-family:var(--ui);font-weight:700;color:var(--brown);font-size:15.5px}
+.case-row .task{font-family:var(--ui);font-weight:500;font-size:15px;color:var(--soft);grid-column:3 / span 2}
+.case-row .go{font-family:var(--ui);font-weight:600;font-size:15px;color:var(--soft);white-space:nowrap}
+.case-row:hover .go{color:var(--ink)}
+
+
+/* хвост перед подвалом */
+.ask{margin-top:88px;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:52px 40px}
+.ask h2{max-width:24ch;margin:0 auto 14px;font-size:clamp(1.5rem,2.4vw,2.1rem)}
+.ask p{color:var(--soft);max-width:52ch;margin:0 auto 28px;font-size:1.02rem}
+.tgbtn{display:inline-flex;align-items:center;gap:9px;font-family:var(--ui);font-weight:600;font-size:15.5px;
+  text-decoration:none;background:var(--pill);color:var(--pill-ink);padding:15px 28px;border-radius:999px;
+  transition:transform .16s,opacity .16s}
+.tgbtn:hover{opacity:.87;transform:translateY(-2px)}
+
+/* подвал */
+.foot{background:var(--pill);color:var(--pill-ink);font-family:var(--ui);font-size:15px;margin-top:96px}
+.foot .wrap{padding-top:54px;padding-bottom:44px}
+.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:30px;margin-bottom:38px}
+.fgrid h4{font-size:14px;opacity:.5;margin:0 0 16px;font-weight:600}
+.fgrid a{display:block;text-decoration:none;margin-bottom:10px;opacity:.75}
+.fgrid a:hover{opacity:1}
+.fbrand{font-weight:700;font-size:22px;letter-spacing:-.03em;margin:0 0 12px}
+.fbot{border-top:1px solid rgba(128,128,128,.25);padding-top:22px;display:flex;gap:20px;flex-wrap:wrap;opacity:.5;font-size:13.5px}
+.fbot .r{margin-left:auto}
+
+@media (max-width:1060px){
+  .wrap{padding:0 20px}
+  .head .wrap{flex-wrap:wrap;gap:12px}
+  .menu{order:3;width:100%;gap:16px}
+  .hero{padding:40px 0 0}
+  .sec{padding:48px 0 0}
+  .gates,.topics,.feed{grid-template-columns:1fr}
+  .case-row{grid-template-columns:1fr;gap:8px}
+  .case-row .task{grid-column:auto}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .fbot .r{margin-left:0}
+  .ask{margin-top:56px;padding:34px 22px}
+  .foot{margin-top:56px}
+}
+</style>
+</head>
+<body>
+
+<header class="head"><div class="wrap">
+  <a class="brand" href="#">daivex.</a>
+  <nav class="menu"><a href="#keysy">Кейсы</a></nav>
+  <!-- пункты меню возвращаются вместе с разделами: <a href="#temy">Темы</a><a href="#instr">Инструменты</a><a href="#zametki">Заметки</a><a href="#baza">База знаний</a> -->
+  <div class="right">
+    <button class="theme" id="theme" aria-label="Переключить тему">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+    <a class="cta" href="https://t.me/Darth_watching_u" target="_blank" rel="noopener">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:7px"><path d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.3-.1-.5-.6-.2L6.2 13.1 1.4 11.6c-1-.3-1-1 .2-1.5l19-7.3c.9-.3 1.6.2 1.3 1.5z"/></svg>Связаться в телеграм</a>
+  </div>
+</div></header>
+
+<main>
+
+<section class="wrap hero">
+  <span class="glow a"></span><span class="glow b"></span><span class="glow c"></span>
+  <h1>Практическое применение ИИ в бизнес-процессах</h1>
+  <p class="lede">Показываем, как устроена автоматизация внутри реальной работы: где теряются часы и какой шаг стоит убрать первым. Разбираем свои процессы и известные решения рынка — и то и другое одинаково подробно.</p>
+</section>
+
+<!-- блок входов скрыт: разветвления строить не из чего, пока нет объёма материалов
+<section class="wrap sec" id="navi">
+  <div class="gates">
+    <a class="gate g1" href="#"><span class="wash"></span>
+      <h3>Если вы здесь впервые</h3>
+      <p>Короткий маршрут по сайту: как устроен разбор процесса, что означает замер в часах и в каком порядке материалы лучше читать.</p>
+      <span class="go">С чего начать →</span></a>
+    <a class="gate g2" href="#keysy"><span class="wash"></span>
+      <h3>Кейсы применения ИИ</h3>
+      <p>Разобранные процессы: что делалось руками, сколько это занимало, где встал ИИ и что осталось за человеком. Со своими замерами и без выдуманных цифр.</p>
+      <span class="go">Смотреть кейсы →</span></a>
+    <a class="gate g3" href="#baza"><span class="wash"></span>
+      <h3>Пошаговые материалы по автоматизации</h3>
+      <p>Технологии, сервисы и приёмы разобраны по шагам: что умеют, где ломаются, сколько стоят и в каких задачах имеют смысл.</p>
+      <span class="go">Открыть материалы →</span></a>
+  </div>
+</section>
+-->
+
+<!-- РАЗДЕЛ СКРЫТ: темы со счётчиками — счётчики условные. Снять комментарий, когда наберётся три записи.
+<section class="wrap sec" id="temy">
+  <h2>Материалы собраны по темам — видно, где лежит нужный контекст.</h2>
+  <p class="intro">Одна тема — один срез: технологии, процессы, отрасли. Счётчик показывает, сколько материалов уже разобрано.</p>
+  <div class="topics">
+    <a class="topic" href="#"><span class="tx"><b>Кейсы применения ИИ</b><span>Разобранные процессы с замером до и после</span></span><span class="n">24</span></a>
+    <a class="topic" href="#"><span class="tx"><b>Агенты и рабочие потоки</b><span>Сценарии, где модель ведёт задачу до конца</span></span><span class="n">20</span></a>
+    <a class="topic" href="#"><span class="tx"><b>Голос и распознавание речи</b><span>Диктовка, транскрипция, голосовой ввод в работу</span></span><span class="n">16</span></a>
+    <a class="topic" href="#"><span class="tx"><b>Связки сервисов и n8n</b><span>Интеграции, триггеры и передача данных между системами</span></span><span class="n">27</span></a>
+    <a class="topic" href="#"><span class="tx"><b>Локальные модели</b><span>Что можно держать у себя и во что это обходится</span></span><span class="n">15</span></a>
+    <a class="topic" href="#"><span class="tx"><b>Учёт, документы и первичка</b><span>Сверки, реестры, проверка комплектов</span></span><span class="n">11</span></a>
+    <a class="topic" href="#"><span class="tx"><b>Приём заявок и звонков</b><span>Первый контакт, классификация, передача в работу</span></span><span class="n">12</span></a>
+    <a class="topic" href="#"><span class="tx"><b>Таблицы и отчётность</b><span>Сведение данных и регулярные выгрузки</span></span><span class="n">13</span></a>
+    <a class="topic" href="#"><span class="tx"><b>Базы знаний и поиск</b><span>Как сделать так, чтобы ответ находился сразу</span></span><span class="n">9</span></a>
+    <a class="topic" href="#"><span class="tx"><b>Регламенты и требования</b><span>Что обязательно по закону и правилам площадок</span></span><span class="n">7</span></a>
+  </div>
+</section>
+-->
+
+<section class="wrap sec" id="keysy">
+  <div class="bar"><h2>Кейсы</h2></div>
+  <p class="said">Разобранный процесс: что делалось руками, сколько это занимало, что осталось за человеком. Со своими замерами и без выдуманных цифр.</p>
+  <div id="rows">
+    <a class="case-row" href="kejs-finansovyj-reestr.html">
+      <span><span class="badge own">Наш кейс</span><span class="name">Сколько денег на счёте — и сколько из них ваши</span></span>
+      <span class="who">Торговля</span><span class="was">было ≈ 30 ч / год</span><span class="now">стало 0 мин</span><span class="go">Читать подробнее →</span></a>
+  </div>
+</section>
+
+<!-- РАЗДЕЛ СКРЫТ: инструменты — ни одного материала не написано. Снять комментарий, когда наберётся три записи.
+<section class="wrap sec" id="instr">
+  <div class="bar"><h2>Новые инструменты</h2><a class="all" href="#">Все инструменты →</a></div>
+  <p class="said">Собственные сборки, которые работают у нас в ежедневной работе. Что есть, как устроено и где это применимо кроме нашего случая.</p>
+  <div class="feed">
+    <a class="item" href="#"><span class="ph"></span><span class="body">
+      <h3>Голосовой ввод в рабочий контур</h3>
+      <p>Диктофон, локальное распознавание и запись в нужный файл: как поставленная голосом задача попадает в работу без ручного переноса.</p>
+      <span class="tags"><span class="tag">голос</span><span class="tag">n8n</span></span></span></a>
+    <a class="item" href="#"><span class="ph"></span><span class="body">
+      <h3>Пайплайн разбора выгрузки из кабинета</h3>
+      <p>Забрать, привести к единому виду и свести: как выгрузка превращается в понятный отчёт без ручных формул и сверок.</p>
+      <span class="tags"><span class="tag">таблицы</span><span class="tag">учёт</span></span></span></a>
+    <a class="item" href="#"><span class="ph"></span><span class="body">
+      <h3>Агент-наблюдатель за источниками</h3>
+      <p>Читает выбранные каналы и сайты, отбирает по заданным правилам и складывает в базу. Что удалось автоматизировать, а что оставили человеку.</p>
+      <span class="tags"><span class="tag">агенты</span><span class="tag">парсинг</span></span></span></a>
+  </div>
+</section>
+-->
+
+<!-- РАЗДЕЛ СКРЫТ: заметки — ни одного материала не написано. Снять комментарий, когда наберётся три записи.
+<section class="wrap sec" id="zametki">
+  <div class="bar"><h2>Новые заметки</h2><a class="all" href="#">Все заметки →</a></div>
+  <p class="said">Короткие наблюдения по ходу работы: что сломалось, что оказалось проще, чем казалось, и какие выводы пришлось переписать.</p>
+  <div class="feed">
+    <a class="item" href="#"><span class="ph"></span><span class="body">
+      <h3>Почему отредактированную расшифровку лучше не брать в работу</h3>
+      <p>На длинной записи редактор выбрасывает половину фактов. Для заметок годится, для анализа процесса — нет.</p>
+      <span class="tags"><span class="tag">голос</span></span></span></a>
+    <a class="item" href="#"><span class="ph"></span><span class="body">
+      <h3>Дешёвая модель на месте, где результат неочевиден</h3>
+      <p>Самая точная модель нужна не везде. Где именно можно взять модель попроще и на чём это видно.</p>
+      <span class="tags"><span class="tag">модели</span></span></span></a>
+    <a class="item" href="#"><span class="ph"></span><span class="body">
+      <h3>Один аккуратно оформленный шаг важнее пяти автоматических</h3>
+      <p>Наблюдение с внедрений: контур, где человек подтверждает спорное, живёт дольше полностью автономного.</p>
+      <span class="tags"><span class="tag">метод</span></span></span></a>
+  </div>
+</section>
+-->
+
+<!-- РАЗДЕЛ СКРЫТ: база знаний — ни одного материала не написано. Снять комментарий, когда наберётся три записи.
+<section class="wrap sec" id="baza">
+  <div class="bar"><h2>Новое в базе знаний</h2><a class="all" href="#">Все материалы →</a></div>
+  <p class="said">Справочник по чужим технологиям: что это такое, зачем нужно, сколько стоит и в каких задачах имеет смысл применять.</p>
+  <div class="feed">
+    <a class="item" href="#"><span class="ph"></span><span class="body">
+      <h3>Whisper — локальное распознавание речи</h3>
+      <p>Что умеет, какое требуется железо, как считать стоимость и где точность падает настолько, что нужен человек.</p>
+      <span class="tags"><span class="tag">голос</span></span></span></a>
+    <a class="item" href="#"><span class="ph"></span><span class="body">
+      <h3>n8n — что это и когда оправданно</h3>
+      <p>Конструктор связок между сервисами: устройство, ограничения и признаки задач, где он лишний.</p>
+      <span class="tags"><span class="tag">связки</span></span></span></a>
+    <a class="item" href="#"><span class="ph"></span><span class="body">
+      <h3>Семь точек любой автоматизации</h3>
+      <p>Триггер, нормализация, обогащение, решение, действие, подтверждение, лог. Каркас, по которому идёт разбор.</p>
+      <span class="tags"><span class="tag">метод</span></span></span></a>
+  </div>
+</section>
+-->
+
+<section class="wrap">
+  <div class="ask">
+    <h2>Есть вопрос по своему процессу?</h2>
+    <p>Напишите в телеграм — можно одним сообщением и своими словами.</p>
+    <a class="tgbtn" href="https://t.me/Darth_watching_u" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.3-.1-.5-.6-.2L6.2 13.1 1.4 11.6c-1-.3-1-1 .2-1.5l19-7.3c.9-.3 1.6.2 1.3 1.5z"/></svg>
+      Написать в телеграм
+    </a>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot"><div class="wrap">
+  <div class="fgrid">
+    <div><p class="fbrand">daivex.</p><p style="margin:0;max-width:32ch;opacity:.7">Автоматизация бизнес-процессов и внедрение ИИ — напрямую с теми, кто делает работу.</p></div>
+    <div><h4>Материалы</h4><a href="#keysy">Кейсы</a></div>
+        <div><h4>Связаться</h4><a href="https://t.me/Darth_watching_u" target="_blank" rel="noopener">Телеграм</a><a href="#temy">Все темы</a></div>
+  </div>
+  <div class="fbot"><span>© 2026 daivex.ru</span><a class="r" href="#">Политика обработки данных</a></div>
+</div></footer>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  document.getElementById('theme').addEventListener('click',function(){
+    root.setAttribute('data-theme', root.getAttribute('data-theme')==='dark'?'light':'dark');
+  });
+})();
+</script>
+</body>
+</html>
