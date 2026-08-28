@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{zagolovok}} — Daivex</title>
-<meta name="description" content="{{opisanie}}">
+<title>«Готово» — не признак — Daivex</title>
+<meta name="description" content="Отчёт исполнителя об успехе не является доказательством успеха. Проверяется наблюдаемым признаком, названным заранее.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Golos+Text:wght@400;500&display=swap" rel="stylesheet">
@@ -161,7 +161,7 @@ a{color:inherit}
 
 <header class="head"><div class="wrap">
   <a class="brand" href="index.html">daivex.</a>
-  <nav class="menu">{{menyu}}</nav>
+  <nav class="menu"><a href="index.html#keysy">Кейсы</a><a href="index.html#zametki">Заметки</a></nav>
   <div class="right">
     <button class="theme" id="theme" aria-label="Переключить тему">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
@@ -176,15 +176,11 @@ a{color:inherit}
 <section class="wrap art">
   <span class="glow a"></span><span class="glow b"></span><span class="glow c"></span>
   <div class="read">
-    <a class="back" href="{{nazad_adres}}">← {{nazad_podpis}}</a>
-    <span class="badge">{{badge}}</span>
-    <h1>{{zagolovok}}</h1>
-    <p class="lede">{{lid}}</p>
+    <a class="back" href="index.html#zametki">← Все заметки</a>
+    <h1>«Готово» — не признак</h1>
     <div class="meta">
-      <span>{{podzagolovok}}</span>
-      <span class="dot">·</span>
-      <span>{{chtenie}}</span>
-{{temy}}
+      <span>1 минута</span>
+      <span class="tag">Работа с агентами</span>
     </div>
   </div>
 </section>
@@ -192,11 +188,16 @@ a{color:inherit}
 <section class="wrap">
 <div class="read prose">
 
-{{telo}}
+<p>Агент отчитался: задача выполнена, страница собрана, ошибок нет. Формально всё верно — код отработал, файл создан. Открываем в браузере: шапка не закреплена, ссылка ведёт в пустоту.</p>
+<p>Отчёт не был ложью. Исполнитель проверил то, что умеет проверять, — что программа завершилась без сбоя. Вопрос, выглядит ли результат так, как задумано, он себе не задавал, потому что задача была поставлена как «собери», а не «добейся вот такого поведения».</p>
+<p>Лечится это одной привычкой: до начала работы называть признак успеха, который можно увидеть глазами.</p>
+<p>Не «сборщик работает», а «после запуска страница открывается и выглядит так же, как опубликованная». Не «навигация добавлена», а «под текстом видна линия и ссылка, клик уводит на главную». Не «данные загружаются», а «в третьей строке таблицы стоит сумма за прошлый вторник».</p>
+<p>Разница в том, что такой признак проверяется за десять секунд и не требует доверия к отчёту. Он либо есть, либо нет.</p>
+<p>Побочный эффект оказался важнее основного: формулируя наблюдаемый признак, обычно обнаруживаешь, что сам не до конца понимал, чего хочешь. Задача, для которой невозможно придумать такой признак, чаще всего поставлена плохо — и переделывать её дешевле до работы, чем после.</p>
 
   <nav class="pager">
-    <a href="{{nazad_adres}}"><i>←</i> {{nazad_podpis}}</a>
-{{next_ssylka}}
+    <a href="index.html#zametki"><i>←</i> Все заметки</a>
+    <a class="next" href="zametka-odin-shag-iz-chetyreh.html">Следующая заметка <i>→</i></a>
   </nav>
 
 </div>
@@ -218,7 +219,7 @@ a{color:inherit}
 <footer class="foot"><div class="wrap">
   <div class="fgrid">
     <div><p class="fbrand">daivex.</p><p style="margin:0;max-width:32ch;opacity:.7">Автоматизация бизнес-процессов и внедрение ИИ — напрямую с теми, кто делает работу.</p></div>
-    <div><h4>Материалы</h4>{{podval}}</div>
+    <div><h4>Материалы</h4><a href="index.html#keysy">Кейсы</a><a href="index.html#zametki">Заметки</a></div>
         <div><h4>Связаться</h4><a href="https://t.me/Darth_watching_u" target="_blank" rel="noopener">Телеграм</a></div>
   </div>
   <div class="fbot"><span>© 2026 daivex.ru</span><a class="r" href="#">Политика обработки данных</a></div>

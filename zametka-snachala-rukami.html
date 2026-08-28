@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{zagolovok}} — Daivex</title>
-<meta name="description" content="{{opisanie}}">
+<title>Сначала руками — Daivex</title>
+<meta name="description" content="Автоматизировать процесс стоит после того, как ручной прогон дал проверяемый результат. Иначе автоматизируется догадка.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Golos+Text:wght@400;500&display=swap" rel="stylesheet">
@@ -161,7 +161,7 @@ a{color:inherit}
 
 <header class="head"><div class="wrap">
   <a class="brand" href="index.html">daivex.</a>
-  <nav class="menu">{{menyu}}</nav>
+  <nav class="menu"><a href="index.html#keysy">Кейсы</a><a href="index.html#zametki">Заметки</a></nav>
   <div class="right">
     <button class="theme" id="theme" aria-label="Переключить тему">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
@@ -176,15 +176,11 @@ a{color:inherit}
 <section class="wrap art">
   <span class="glow a"></span><span class="glow b"></span><span class="glow c"></span>
   <div class="read">
-    <a class="back" href="{{nazad_adres}}">← {{nazad_podpis}}</a>
-    <span class="badge">{{badge}}</span>
-    <h1>{{zagolovok}}</h1>
-    <p class="lede">{{lid}}</p>
+    <a class="back" href="index.html#zametki">← Все заметки</a>
+    <h1>Сначала руками</h1>
     <div class="meta">
-      <span>{{podzagolovok}}</span>
-      <span class="dot">·</span>
-      <span>{{chtenie}}</span>
-{{temy}}
+      <span>1 минута</span>
+      <span class="tag">Автоматизация</span>
     </div>
   </div>
 </section>
@@ -192,11 +188,16 @@ a{color:inherit}
 <section class="wrap">
 <div class="read prose">
 
-{{telo}}
+<p>Соблазн понятный: зачем делать руками то, что можно сразу поручить машине. Раз уж всё равно строим систему — пусть она делает и первый экземпляр тоже.</p>
+<p>Проблема в том, что тогда не с чем сверить результат.</p>
+<p>Страница сайта сначала была собрана вручную и проверена: открыта, прочитана, поправлена в мелочах. Только после этого писался сборщик, и требование к нему было одно — воспроизвести уже готовую страницу. Совпало побайтово. Это означало, что шаблон вынут правильно, а не что программа отработала без ошибок.</p>
+<p>Если бы сборщик писался первым, сверять было бы не с чем. Любой результат выглядел бы приемлемым, потому что эталона не существует. Ошибки в разметке всплыли бы через месяц, на пятом материале, и искать их пришлось бы уже внутри системы.</p>
+<p>Есть и вторая причина, менее очевидная. Ручной прогон показывает, из чего процесс состоит на самом деле. До него есть только представление о процессе — обычно неполное. Автоматизация, построенная на представлении, закрепляет его вместе со всеми пробелами.</p>
+<p>Правило простое: сначала один прогон руками до проверяемого результата, потом система, которая этот результат повторяет. Порядок обратный интуиции и экономит больше времени, чем отнимает.</p>
 
   <nav class="pager">
-    <a href="{{nazad_adres}}"><i>←</i> {{nazad_podpis}}</a>
-{{next_ssylka}}
+    <a href="index.html#zametki"><i>←</i> Все заметки</a>
+
   </nav>
 
 </div>
@@ -218,7 +219,7 @@ a{color:inherit}
 <footer class="foot"><div class="wrap">
   <div class="fgrid">
     <div><p class="fbrand">daivex.</p><p style="margin:0;max-width:32ch;opacity:.7">Автоматизация бизнес-процессов и внедрение ИИ — напрямую с теми, кто делает работу.</p></div>
-    <div><h4>Материалы</h4>{{podval}}</div>
+    <div><h4>Материалы</h4><a href="index.html#keysy">Кейсы</a><a href="index.html#zametki">Заметки</a></div>
         <div><h4>Связаться</h4><a href="https://t.me/Darth_watching_u" target="_blank" rel="noopener">Телеграм</a></div>
   </div>
   <div class="fbot"><span>© 2026 daivex.ru</span><a class="r" href="#">Политика обработки данных</a></div>

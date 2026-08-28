@@ -170,8 +170,7 @@ h2{font-family:var(--ui);font-weight:600;letter-spacing:-.042em;line-height:1.07
 
 <header class="head"><div class="wrap">
   <a class="brand" href="#">daivex.</a>
-  <nav class="menu"><a href="#keysy">Кейсы</a></nav>
-  <!-- пункты меню возвращаются вместе с разделами: <a href="#temy">Темы</a><a href="#instr">Инструменты</a><a href="#zametki">Заметки</a><a href="#baza">База знаний</a> -->
+  <nav class="menu"><a href="#keysy">Кейсы</a><a href="#zametki">Заметки</a></nav>
   <div class="right">
     <button class="theme" id="theme" aria-label="Переключить тему">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
@@ -200,10 +199,6 @@ h2{font-family:var(--ui);font-weight:600;letter-spacing:-.042em;line-height:1.07
       <h3>Кейсы применения ИИ</h3>
       <p>Разобранные процессы: что делалось руками, сколько это занимало, где встал ИИ и что осталось за человеком. Со своими замерами и без выдуманных цифр.</p>
       <span class="go">Смотреть кейсы →</span></a>
-    <a class="gate g3" href="#baza"><span class="wash"></span>
-      <h3>Пошаговые материалы по автоматизации</h3>
-      <p>Технологии, сервисы и приёмы разобраны по шагам: что умеют, где ломаются, сколько стоят и в каких задачах имеют смысл.</p>
-      <span class="go">Открыть материалы →</span></a>
   </div>
 </section>
 -->
@@ -237,68 +232,39 @@ h2{font-family:var(--ui);font-weight:600;letter-spacing:-.042em;line-height:1.07
   </div>
 </section>
 
-<!-- РАЗДЕЛ СКРЫТ: инструменты — ни одного материала не написано. Снять комментарий, когда наберётся три записи.
+<!-- РАЗДЕЛ СКРЫТ: инструменты — 1 из 3 записей, не хватает 2. Секцию раскомментирует сборка, когда наберётся порог.
 <section class="wrap sec" id="instr">
-  <div class="bar"><h2>Новые инструменты</h2><a class="all" href="#">Все инструменты →</a></div>
-  <p class="said">Собственные сборки, которые работают у нас в ежедневной работе. Что есть, как устроено и где это применимо кроме нашего случая.</p>
+  <div class="bar"><h2>Новые инструменты</h2></div>
+  <p class="said">Разбор инструмента: что он делает, как устроен внутри, сколько стоит и в каких задачах имеет смысл.</p>
   <div class="feed">
-    <a class="item" href="#"><span class="ph"></span><span class="body">
-      <h3>Голосовой ввод в рабочий контур</h3>
-      <p>Диктофон, локальное распознавание и запись в нужный файл: как поставленная голосом задача попадает в работу без ручного переноса.</p>
-      <span class="tags"><span class="tag">голос</span><span class="tag">n8n</span></span></span></a>
-    <a class="item" href="#"><span class="ph"></span><span class="body">
-      <h3>Пайплайн разбора выгрузки из кабинета</h3>
-      <p>Забрать, привести к единому виду и свести: как выгрузка превращается в понятный отчёт без ручных формул и сверок.</p>
-      <span class="tags"><span class="tag">таблицы</span><span class="tag">учёт</span></span></span></a>
-    <a class="item" href="#"><span class="ph"></span><span class="body">
-      <h3>Агент-наблюдатель за источниками</h3>
-      <p>Читает выбранные каналы и сайты, отбирает по заданным правилам и складывает в базу. Что удалось автоматизировать, а что оставили человеку.</p>
-      <span class="tags"><span class="tag">агенты</span><span class="tag">парсинг</span></span></span></a>
+    <a class="item" href="instrument-za-chto-vy-platite.html"><span class="ph"></span><span class="body">
+      <h3>Ноль, шесть и одиннадцать</h3>
+      <p>Два из трёх ценников на рынке синтеза речи выставлены за одну и ту же бесплатную модель. Как проверить, за что вы платите.</p>
+      <span class="tags"><span class="tag">Голос и речь</span><span class="tag">Выбор инструментов</span></span></span></a>
   </div>
 </section>
 -->
 
-<!-- РАЗДЕЛ СКРЫТ: заметки — ни одного материала не написано. Снять комментарий, когда наберётся три записи.
 <section class="wrap sec" id="zametki">
-  <div class="bar"><h2>Новые заметки</h2><a class="all" href="#">Все заметки →</a></div>
+  <div class="bar"><h2>Новые заметки</h2></div>
   <p class="said">Короткие наблюдения по ходу работы: что сломалось, что оказалось проще, чем казалось, и какие выводы пришлось переписать.</p>
   <div class="feed">
-    <a class="item" href="#"><span class="ph"></span><span class="body">
-      <h3>Почему отредактированную расшифровку лучше не брать в работу</h3>
-      <p>На длинной записи редактор выбрасывает половину фактов. Для заметок годится, для анализа процесса — нет.</p>
-      <span class="tags"><span class="tag">голос</span></span></span></a>
-    <a class="item" href="#"><span class="ph"></span><span class="body">
-      <h3>Дешёвая модель на месте, где результат неочевиден</h3>
-      <p>Самая точная модель нужна не везде. Где именно можно взять модель попроще и на чём это видно.</p>
-      <span class="tags"><span class="tag">модели</span></span></span></a>
-    <a class="item" href="#"><span class="ph"></span><span class="body">
-      <h3>Один аккуратно оформленный шаг важнее пяти автоматических</h3>
-      <p>Наблюдение с внедрений: контур, где человек подтверждает спорное, живёт дольше полностью автономного.</p>
-      <span class="tags"><span class="tag">метод</span></span></span></a>
+    <a class="item" href="zametka-snachala-rukami.html"><span class="ph"></span><span class="body">
+      <h3>Сначала руками</h3>
+      <p>Автоматизировать процесс стоит после того, как ручной прогон дал проверяемый результат. Иначе автоматизируется догадка.</p>
+      <span class="tags"><span class="tag">Автоматизация</span></span></span></a>
+    <a class="item" href="zametka-odin-shag-iz-chetyreh.html"><span class="ph"></span><span class="body">
+      <h3>Один шаг из четырёх</h3>
+      <p>Прежде чем менять систему целиком, стоит найти шаг, на котором она ломается. Часто это один шаг из четырёх.</p>
+      <span class="tags"><span class="tag">Голос и речь</span></span></span></a>
+    <a class="item" href="zametka-gotovo-ne-priznak.html"><span class="ph"></span><span class="body">
+      <h3>«Готово» — не признак</h3>
+      <p>Отчёт исполнителя об успехе не является доказательством успеха. Проверяется наблюдаемым признаком, названным заранее.</p>
+      <span class="tags"><span class="tag">Работа с агентами</span></span></span></a>
   </div>
 </section>
--->
 
-<!-- РАЗДЕЛ СКРЫТ: база знаний — ни одного материала не написано. Снять комментарий, когда наберётся три записи.
-<section class="wrap sec" id="baza">
-  <div class="bar"><h2>Новое в базе знаний</h2><a class="all" href="#">Все материалы →</a></div>
-  <p class="said">Справочник по чужим технологиям: что это такое, зачем нужно, сколько стоит и в каких задачах имеет смысл применять.</p>
-  <div class="feed">
-    <a class="item" href="#"><span class="ph"></span><span class="body">
-      <h3>Whisper — локальное распознавание речи</h3>
-      <p>Что умеет, какое требуется железо, как считать стоимость и где точность падает настолько, что нужен человек.</p>
-      <span class="tags"><span class="tag">голос</span></span></span></a>
-    <a class="item" href="#"><span class="ph"></span><span class="body">
-      <h3>n8n — что это и когда оправданно</h3>
-      <p>Конструктор связок между сервисами: устройство, ограничения и признаки задач, где он лишний.</p>
-      <span class="tags"><span class="tag">связки</span></span></span></a>
-    <a class="item" href="#"><span class="ph"></span><span class="body">
-      <h3>Семь точек любой автоматизации</h3>
-      <p>Триггер, нормализация, обогащение, решение, действие, подтверждение, лог. Каркас, по которому идёт разбор.</p>
-      <span class="tags"><span class="tag">метод</span></span></span></a>
-  </div>
-</section>
--->
+<!-- РАЗДЕЛ СКРЫТ: база знаний — 0 из 3 записей, не хватает 3. Секцию раскомментирует сборка, когда наберётся порог. -->
 
 <section class="wrap">
   <div class="ask">
@@ -316,7 +282,7 @@ h2{font-family:var(--ui);font-weight:600;letter-spacing:-.042em;line-height:1.07
 <footer class="foot"><div class="wrap">
   <div class="fgrid">
     <div><p class="fbrand">daivex.</p><p style="margin:0;max-width:32ch;opacity:.7">Автоматизация бизнес-процессов и внедрение ИИ — напрямую с теми, кто делает работу.</p></div>
-    <div><h4>Материалы</h4><a href="#keysy">Кейсы</a></div>
+    <div><h4>Материалы</h4><a href="#keysy">Кейсы</a><a href="#zametki">Заметки</a></div>
         <div><h4>Связаться</h4><a href="https://t.me/Darth_watching_u" target="_blank" rel="noopener">Телеграм</a></div>
   </div>
   <div class="fbot"><span>© 2026 daivex.ru</span><a class="r" href="#">Политика обработки данных</a></div>
