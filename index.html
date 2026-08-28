@@ -102,6 +102,9 @@ h2{font-family:var(--ui);font-weight:600;letter-spacing:-.042em;line-height:1.07
   text-decoration:none;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s,border-color .2s}
 .item:hover{transform:translateY(-4px);border-color:var(--ghost);box-shadow:0 18px 40px var(--shadow)}
 .item .ph{height:132px;background:var(--ph);border-bottom:1px solid var(--line)}
+/* клейкая лента поверх стикера-заметки: высота — радиус скругления,
+   верхние углы срезает overflow:hidden самой карточки */
+.item .tape{height:var(--r);flex:none;background:var(--ph)}
 .item .body{padding:22px 24px 24px;display:flex;flex-direction:column;flex:1}
 .item h3{font-family:var(--ui);font-weight:600;font-size:1.1rem;line-height:1.28;letter-spacing:-.026em;margin:0 0 10px}
 .item p{color:var(--soft);font-size:14.8px;line-height:1.5;margin:0 0 20px}
@@ -249,15 +252,15 @@ h2{font-family:var(--ui);font-weight:600;letter-spacing:-.042em;line-height:1.07
   <div class="bar"><h2>Новые заметки</h2></div>
   <p class="said">Короткие наблюдения по ходу работы: что сломалось, что оказалось проще, чем казалось, и какие выводы пришлось переписать.</p>
   <div class="feed">
-    <a class="item" href="zametka-snachala-rukami.html"><span class="ph"></span><span class="body">
+    <a class="item" href="zametka-snachala-rukami.html"><span class="tape"></span><span class="body">
       <h3>Сначала руками</h3>
       <p>Автоматизировать процесс стоит после того, как ручной прогон дал проверяемый результат. Иначе автоматизируется догадка.</p>
       <span class="tags"><span class="tag">Автоматизация</span></span></span></a>
-    <a class="item" href="zametka-odin-shag-iz-chetyreh.html"><span class="ph"></span><span class="body">
+    <a class="item" href="zametka-odin-shag-iz-chetyreh.html"><span class="tape"></span><span class="body">
       <h3>Один шаг из четырёх</h3>
       <p>Прежде чем менять систему целиком, стоит найти шаг, на котором она ломается. Часто это один шаг из четырёх.</p>
       <span class="tags"><span class="tag">Голос и речь</span></span></span></a>
-    <a class="item" href="zametka-gotovo-ne-priznak.html"><span class="ph"></span><span class="body">
+    <a class="item" href="zametka-gotovo-ne-priznak.html"><span class="tape"></span><span class="body">
       <h3>«Готово» — не признак</h3>
       <p>Отчёт исполнителя об успехе не является доказательством успеха. Проверяется наблюдаемым признаком, названным заранее.</p>
       <span class="tags"><span class="tag">Работа с агентами</span></span></span></a>

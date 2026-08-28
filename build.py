@@ -41,7 +41,7 @@ SHABLON_INDEX = os.path.join(SHABLONY, 'index.html')
 #   imya       человеческое имя раздела (отчёт)
 #   prefiks    приставка имени выходного html
 #   shablon    шаблон страницы материала в templates/
-#   karta      вид карточки на главной: 'stroka' (кейсы) или 'plitka'
+#   karta      вид карточки: 'stroka' (кейсы), 'plitka', 'stiker'
 #   sekciya    id секции на главной, он же якорь ссылок
 #   menyu      текст пункта меню в шапке
 #   podval     текст ссылки в подвале
@@ -98,7 +98,7 @@ RAZDELY = [
         'imya': 'Заметки',
         'prefiks': 'zametka-',
         'shablon': 'zametka.html',
-        'karta': 'plitka',
+        'karta': 'stiker',
         'sekciya': 'zametki',
         'menyu': 'Заметки',
         'podval': 'Заметки',
@@ -301,8 +301,12 @@ def karta_stroka(m):
             % (polya.get('otrasl', ''), nutro))
 
 
-def karta_plitka(m):
-    """Карточка материала в ленте: без замеров и без плашки типа."""
+def kartochka(m, verhushka):
+    """Карточка материала в ленте: без замеров и без плашки типа.
+
+    verhushka — то, чем карточка начинается: заглушка под картинку
+    или узкая лента.
+    """
     polya = m['polya']
 
     temy = [t.strip() for t in polya.get('temy', '').split(',') if t.strip()]
@@ -311,19 +315,31 @@ def karta_plitka(m):
         tegi = ('\n      <span class="tags">%s</span>'
                 % ''.join('<span class="tag">%s</span>' % t for t in temy))
 
-    return ('    <a class="item" href="%s"><span class="ph"></span><span class="body">\n'
+    return ('    <a class="item" href="%s">%s<span class="body">\n'
             '      <h3>%s</h3>\n'
             '      <p>%s</p>%s</span></a>'
             % (m['imya'],
+               verhushka,
                polya.get('zagolovok', ''),
                polya.get('opisanie') or polya.get('lid', ''),
                tegi))
+
+
+def karta_plitka(m):
+    """Плитка с заглушкой под картинку."""
+    return kartochka(m, '<span class="ph"></span>')
+
+
+def karta_stiker(m):
+    """Стикер: вместо заглушки — полоса клейкой ленты у верхнего края."""
+    return kartochka(m, '<span class="tape"></span>')
 
 
 # вид карточки -> сборщик карточки и открывающий тег списка
 KARTY = {
     'stroka': (karta_stroka, '  <div id="rows">'),
     'plitka': (karta_plitka, '  <div class="feed">'),
+    'stiker': (karta_stiker, '  <div class="feed">'),
 }
 
 
