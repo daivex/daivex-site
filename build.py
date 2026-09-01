@@ -25,6 +25,7 @@ markdown, подставляет в шаблон страницы раздела
 
 import io
 import os
+import re
 import sys
 
 import markdown
@@ -148,6 +149,35 @@ PLASHKA_KLASS = {
 
 # приставки строки «было/стало»; значение иногда уже набрано с ними
 PRIPISKI = ('было', 'стало')
+
+# Вилка слов в теле материала: нижняя и верхняя граница. Материал короче
+# нижней недоговаривает, длиннее верхней — расплывается; стоп в обе стороны.
+# Раздела нет в словаре — объём у него не проверяется, остальные проверки
+# всё равно работают.
+VILKA = {
+    'keysy': (700, 1500),
+    'instrumenty': (400, 1200),
+    'zametki': (150, 300),
+}
+
+# Слово — токен, в котором есть буква или цифра. Решётки заголовков, палки
+# таблиц и одиночные тире словами не считаются.
+SLOVO = re.compile(r'[^\W_]', re.U)
+
+# Запрещено в теле: сборка останавливается.
+STOP_SLOVA = (
+    (re.compile(r'человек\w*\s+в\s+петл\w+', re.I | re.U),
+     'правильно «контроль человека»'),
+)
+
+# Запрещено как название раздела или типа материала. Обычное употребление
+# того же слова автоматически не отличить — поэтому предупреждение, не стоп.
+SLOVA_POD_VOPROSOM = (
+    (re.compile(r'\bразбор\w*', re.I | re.U),
+     'правильно «кейсы», если это название раздела или типа материала'),
+    (re.compile(r'\bреестр\w*', re.I | re.U),
+     'правильно «кейсы», если это название раздела или типа материала'),
+)
 
 
 def chitat_md(put):
@@ -446,7 +476,180 @@ def sobrat_index(sobrannoe, obshchee):
     io.open(put, 'w', encoding='utf-8', newline='\n').write(stranica)
 
 
+# --- проверка материалов ---------------------------------------------------
+#
+# Сломанный материал не должен попасть на сайт, поэтому проверка идёт до
+# первой записи .html: упала — ни один файл в корне не перезаписан.
+#
+# Проверяются все материалы до единого, и только потом сборка падает общим
+# списком: иначе правка шла бы по одной ошибке за прогон.
+
+
+def razobrat_syro(put):
+    """Файл построчно: поля шапки и тело с настоящими номерами строк.
+
+    Своё чтение, а не chitat_md: проверке нужны номера строк в файле,
+    сборке они не нужны. Границу шапки ищем так же — '---' первой строкой,
+    конец на первом следующем '---'.
+    """
+    stroki = io.open(put, encoding='utf-8').read().replace('\r\n', '\n').split('\n')
+    polya = {}
+    nachalo = 0
+
+    if stroki and stroki[0].strip() == '---':
+        for i in range(1, len(stroki)):
+            if stroki[i].strip() == '---':
+                nachalo = i + 1
+                break
+        for stroka in stroki[1:max(nachalo - 1, 1)]:
+            if not stroka.strip() or ':' not in stroka:
+                continue
+            klyuch, znachenie = stroka.split(':', 1)
+            polya[klyuch.strip()] = znachenie.strip()
+
+    telo = [(nachalo + i + 1, s) for i, s in enumerate(stroki[nachalo:])]
+    return polya, telo
+
+
+def sklonenie_slov(n):
+    if n % 10 == 1 and n % 100 != 11:
+        return 'слово'
+    if n % 10 in (2, 3, 4) and n % 100 not in (12, 13, 14):
+        return 'слова'
+    return 'слов'
+
+
+def slova(tekst):
+    return [t for t in tekst.split() if SLOVO.search(t)]
+
+
+def tekst_zagolovka(stroka):
+    """'## Что нашлось {: .x}' -> 'Что нашлось'."""
+    tekst = re.sub(r'^#+\s*', '', stroka)
+    tekst = re.sub(r'\s*\{:[^}]*\}\s*$', '', tekst)
+    return tekst.strip()
+
+
+def vne_koda(telo):
+    """Тело без строк внутри ``` — решётка там комментарий, не заголовок."""
+    snaruzhi = []
+    v_kode = False
+    for nomer, stroka in telo:
+        if stroka.lstrip().startswith('```'):
+            v_kode = not v_kode
+            continue
+        if not v_kode:
+            snaruzhi.append((nomer, stroka))
+    return snaruzhi
+
+
+def proverit_fajl(put, klyuch):
+    """Стопы и предупреждения по одному материалу.
+
+    Все пять правил отрабатывают целиком: файл с пустой датой всё равно
+    досчитывается по словам и заголовкам, чтобы за один прогон было видно
+    всё, что в нём не так.
+    """
+    polya, telo = razobrat_syro(put)
+    stopy = []
+    predupr = []
+
+    # 1-2. Шапка. Номера строки нет: поля может не быть вовсе.
+    for pole in ('data', 'zagolovok'):
+        if not polya.get(pole, '').strip():
+            chego = 'нет поля' if pole not in polya else 'пустое поле'
+            stopy.append((0, 'шапка', '%s %s' % (chego, pole)))
+
+    # 3. Заголовки в теле: два-три слова, четыре и больше — нарушение.
+    for nomer, stroka in vne_koda(telo):
+        if not stroka.startswith('#'):
+            continue
+        tekst = tekst_zagolovka(stroka)
+        skolko = len(slova(tekst))
+        if skolko > 3:
+            stopy.append((nomer, 'строка %d' % nomer,
+                          'заголовок из %d слов: «%s»' % (skolko, tekst)))
+
+    # 4. Вилка слов в теле. Шапка не считается по построению.
+    vilka = VILKA.get(klyuch)
+    if vilka:
+        nizhnyaya, verhnyaya = vilka
+        skolko = len(slova(' '.join(s for _, s in telo)))
+        granica = ''
+        if skolko < nizhnyaya:
+            granica = 'на %d меньше нижней границы' % (nizhnyaya - skolko)
+        elif skolko > verhnyaya:
+            granica = 'на %d больше верхней границы' % (skolko - verhnyaya)
+        if granica:
+            stopy.append((0, 'тело',
+                          '%d %s при вилке %d–%d — %s'
+                          % (skolko, sklonenie_slov(skolko), nizhnyaya,
+                             verhnyaya, granica)))
+
+    # 5. Слова. Одни останавливают сборку, другие только предупреждают.
+    for nomer, stroka in telo:
+        for shablon, podskazka in STOP_SLOVA:
+            for najdeno in shablon.finditer(stroka):
+                stopy.append((nomer, 'строка %d' % nomer,
+                              'запрещено «%s» — %s'
+                              % (najdeno.group(0), podskazka)))
+        for shablon, podskazka in SLOVA_POD_VOPROSOM:
+            for najdeno in shablon.finditer(stroka):
+                predupr.append('  %-12s «%s» — %s'
+                               % ('строка %d' % nomer, najdeno.group(0),
+                                  podskazka))
+
+    stopy.sort(key=lambda s: s[0])
+    return ['  %-12s %s' % (mesto, chto) for _, mesto, chto in stopy], predupr
+
+
+def proverit():
+    """Все материалы разом. Есть стопы — печатаем список и выходим."""
+    stopy = []
+    predupr = []
+
+    for razdel in RAZDELY:
+        papka = os.path.join(KONTENT, razdel['papka'])
+        if not os.path.isdir(papka):
+            continue
+        for imya in sorted(os.listdir(papka)):
+            if not imya.endswith('.md'):
+                continue
+            put = os.path.join(papka, imya)
+            svoi_stopy, svoi_predupr = proverit_fajl(put, razdel['klyuch'])
+            gde = os.path.relpath(put, ROOT)
+            if svoi_stopy:
+                stopy.append((gde, svoi_stopy))
+            if svoi_predupr:
+                predupr.append((gde, svoi_predupr))
+
+    if predupr:
+        print('')
+        print('Предупреждения — сборка не остановлена:')
+        for gde, stroki in predupr:
+            print('')
+            print(gde)
+            for stroka in stroki:
+                print(stroka)
+        print('')
+
+    if not stopy:
+        return
+
+    sys.stdout.flush()
+    vyvod = sys.stderr
+    vyvod.write('\nМатериалы не прошли проверку. Сборка остановлена,\n'
+                'ни один .html не перезаписан.\n')
+    for gde, stroki in stopy:
+        vyvod.write('\n%s\n' % gde)
+        for stroka in stroki:
+            vyvod.write('%s\n' % stroka)
+    vyvod.write('\n')
+    sys.exit(1)
+
+
 def sobrat():
+    proverit()
     sobrannoe = dict((r['klyuch'], chitat_razdel(r)) for r in RAZDELY)
     obshchee = obshchie_ssylki(sobrannoe)
 
@@ -488,6 +691,7 @@ def pechat(sobrannoe):
 if __name__ == '__main__':
     try:
         sys.stdout.reconfigure(encoding='utf-8')
+        sys.stderr.reconfigure(encoding='utf-8')
     except Exception:
         pass
     pechat(sobrat())
